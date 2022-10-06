@@ -58,6 +58,9 @@ p {
                 Select some files
             </label>    
         </form>
+        <progress id="progress-bar" max=100 value=0></progress>
+        <div id="gallery"></div>
+
     </div>
 
     
@@ -71,6 +74,9 @@ p {
         //     dropArea.addEventListener('drop', handlerFunction, false)
 
         let dropArea = document.getElementById('drop-area')
+        let filesDone = 0
+        let filesToDo = 0
+        let progressBar = document.getElementById('progress-bar')
 
 
         ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -106,8 +112,12 @@ p {
         handleFiles(files)
     }
     function handleFiles(files) {
-        ([...files]).forEach(uploadFile)
+        files = [...files]
+        initializeProgress(files.length)
+        files.forEach(uploadFile)
+        files.forEach(previewFile)
     }
+
 
     // function uploadFile(file) {
     //         let url = 'YOUR URL HERE'
@@ -147,6 +157,27 @@ p {
             xhr.send(formData)
         }
 
+
+    function previewFile(file) {
+        let reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onloadend = function () {
+            let img = document.createElement('img')
+            img.src = reader.result
+            document.getElementById('gallery').appendChild(img)
+        }
+    }
+
+    function initializeProgress(numfiles) {
+            progressBar.value = 0
+            filesDone = 0
+            filesToDo = numfiles
+        }
+
+        function progressDone() {
+            filesDone++
+            progressBar.value = filesDone / filesToDo * 100
+        }
 
 
 
