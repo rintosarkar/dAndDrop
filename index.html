@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uddin Md Faizan</title>
     <style>
-        #drop-area {
+  #drop-area {
   border: 2px dashed #ccc;
   border-radius: 20px;
-  width: 480px;
+  width: 400px;
   font-family: sans-serif;
   margin: 100px auto;
   padding: 20px;
@@ -68,13 +68,18 @@ p {
     font-size: 2em;
 }
 
+.sub-title{
+    text-align:center;
+}
+
     </style>
 </head>
 <body>
     <div id="drop-area">
         <p class="main-title">Uddin Md Faizan's Gallery</p>
         <form class="my-form">
-            <p>Upload multiple files with the file dialog or by dragging and dropping images onto the dashed region</p>
+            <p class="sub-title">
+                Upload Images dragging and dropping <br/> images onto the dashed region</p>
             <input type="file" id="fileElem" accept="image/*" onchange="handleFiles(this.files)">
             <label class="button" for="fileElem">
                 Select some files
