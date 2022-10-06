@@ -62,13 +62,19 @@ p {
 
 }
 
+.main-title{
+    text-align:center;
+    font-size: 2em;
+}
+
     </style>
 </head>
 <body>
     <div id="drop-area">
+        <p class="main-title">Uddin Md Faizan's Gallery</p>
         <form class="my-form">
             <p>Upload multiple files with the file dialog or by dragging and dropping images onto the dashed region</p>
-            <input type="file" id="fileElem" multiple accept="image/*" onchange="handleFiles(this.files)">
+            <input type="file" id="fileElem" accept="image/*" onchange="handleFiles(this.files)">
             <label class="button" for="fileElem">
                 Select some files
             </label>    
@@ -161,7 +167,8 @@ p {
             xhr.addEventListener('readystatechange', function (e) {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     // Done. Inform the user
-                    alert('Done');
+                    alert('Thank you konkoni begum!');
+                    location.reload();
                 }
                 else if (xhr.readyState == 4 && xhr.status != 200) {
                     // Error. Inform the user
