@@ -178,7 +178,7 @@ p {
 
             formData.append('file', file);
             formData.append("upload_preset", "dimage");
-            formData.append("tags", "faizan");
+            formData.append("tags", "fphoto");
             xhr.send(formData)
         }
 
@@ -206,7 +206,7 @@ p {
 
     fetchImage();
         function fetchImage(){
-            let url = "https://res.cloudinary.com/dgjvys7hh/image/list/faizan.json";
+            let url = "https://res.cloudinary.com/dgjvys7hh/image/list/fphoto.json";
 
             fetch(url)           //api for the get request
                 .then(response => response.json())
