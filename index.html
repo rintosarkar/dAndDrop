@@ -47,6 +47,21 @@ p {
   display: none;
 }
 
+.single-image{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 5px;
+}
+
+.main-gallery{
+    display:flex;
+    padding: 1em;
+    border: 1px solid green;
+    border-radius: 1em;
+
+}
+
     </style>
 </head>
 <body>
@@ -63,7 +78,9 @@ p {
 
     </div>
 
-    
+    <div class="main-gallery" id="main">
+
+    </div>
 
     <script>
         // let dropArea = document.getElementById('drop-area')
@@ -152,8 +169,9 @@ p {
                 }
             })
 
-            formData.append('file', file)
+            formData.append('file', file);
             formData.append("upload_preset", "dimage");
+            formData.append("tags", "faizan");
             xhr.send(formData)
         }
 
@@ -179,9 +197,35 @@ p {
             progressBar.value = filesDone / filesToDo * 100
         }
 
+    fetchImage();
+        function fetchImage(){
+            let url = "https://res.cloudinary.com/dgjvys7hh/image/list/faizan.json";
 
+            fetch(url)           //api for the get request
+                .then(response => response.json())
+                .then(data => 
+                    {
+                        // console.log(data.resources)
+                        let images = data.resources;
+                        let rootPath = "https://res.cloudinary.com/dgjvys7hh/image/upload/";
+                        var elm = document.querySelector("#main");
 
+                        let item = "<div class='image-container'>";
+                            images.forEach(function(i){
+                                
+                                item += '<img class="single-image" src="'+rootPath+i.public_id+'.'+i.format+'"/></div>'
 
+                                document.getElementById("main").innerHTML = (item)
+                            })
+
+                            
+                                
+
+                    }
+                );
+        }
+
+        
     </script>
 </body>
 </html>
