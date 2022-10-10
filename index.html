@@ -5,76 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uddin Md Faizan</title>
-    <style>
-  #drop-area {
-  border: 2px dashed #ccc;
-  border-radius: 20px;
-  width: 400px;
-  font-family: sans-serif;
-  margin: 100px auto;
-  padding: 20px;
-}
-#drop-area.highlight {
-  border-color: purple;
-}
-p {
-  margin-top: 0;
-}
-.my-form {
-  margin-bottom: 10px;
-}
-#gallery {
-  margin-top: 10px;
-}
-#gallery img {
-  width: 150px;
-  margin-bottom: 10px;
-  margin-right: 10px;
-  vertical-align: middle;
-}
-.button {
-  display: inline-block;
-  padding: 10px;
-  background: #ccc;
-  cursor: pointer;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-.button:hover {
-  background: #ddd;
-}
-#fileElem {
-  display: none;
-}
-
-.single-image{
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    margin-right: 5px;
-}
-
-.main-gallery{
-    display:flex;
-    padding: 1em;
-    border: 1px solid green;
-    border-radius: 1em;
-    flex-wrap: wrap;
-
-}
-
-.main-title{
-    text-align:center;
-    font-size: 2em;
-}
-
-.sub-title{
-    text-align:center;
-}
-
-    </style>
+    <link rel="stylesheet" href="assets/css/app.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
+    <div class="top-section text-white text-2xl bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-center py-5">
+        <h1>Uddin Md Faizan's Gallery</h1>
+    </div>
     <div id="drop-area">
         <p class="main-title">Uddin Md Faizan's Gallery</p>
         <form class="my-form">
@@ -95,151 +32,9 @@ p {
     </div>
 
     <script>
-        // let dropArea = document.getElementById('drop-area')
-
-        //     dropArea.addEventListener('dragenter', handlerFunction, false)
-        //     dropArea.addEventListener('dragleave', handlerFunction, false)
-        //     dropArea.addEventListener('dragover', handlerFunction, false)
-        //     dropArea.addEventListener('drop', handlerFunction, false)
-
-        let dropArea = document.getElementById('drop-area')
-        let filesDone = 0
-        let filesToDo = 0
-        let progressBar = document.getElementById('progress-bar')
-
-
-        ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                dropArea.addEventListener(eventName, preventDefaults, false)
-            })
-
-            function preventDefaults(e) {
-                e.preventDefault()
-                e.stopPropagation()
-            }
-
-            ;['dragenter', 'dragover'].forEach(eventName => {
-                    dropArea.addEventListener(eventName, highlight, false)
-                })
-
-                    ;['dragleave', 'drop'].forEach(eventName => {
-                        dropArea.addEventListener(eventName, unhighlight, false)
-                    })
-
-                function highlight(e) {
-                    dropArea.classList.add('highlight')
-                }
-
-                function unhighlight(e) {
-                    dropArea.classList.remove('highlight')
-                }
-    dropArea.addEventListener('drop', handleDrop, false)
-
-    function handleDrop(e) {
-        let dt = e.dataTransfer
-        let files = dt.files
-
-        handleFiles(files)
-    }
-    function handleFiles(files) {
-        files = [...files]
-        initializeProgress(files.length)
-        files.forEach(uploadFile)
-        files.forEach(previewFile)
-    }
-
-
-    // function uploadFile(file) {
-    //         let url = 'YOUR URL HERE'
-    //         let formData = new FormData()
-
-    //         formData.append('file', file)
-
-    //         fetch(url, {
-    //             method: 'POST',
-    //             body: formData
-    //         })
-    //             .then(() => { /* Done. Inform the user */ })
-    //             .catch(() => { /* Error. Inform the user */ })
-    //     }
-
-    function uploadFile(file) {
-        console.log(file);
-        // return
-            var url = 'https://api.cloudinary.com/v1_1/dgjvys7hh/image/upload'
-            var xhr = new XMLHttpRequest()
-            var formData = new FormData()
-            xhr.open('POST', url, true)
-
-            xhr.addEventListener('readystatechange', function (e) {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    // Done. Inform the user
-                    alert('Thank you konkoni begum!');
-                    fetchImage();
-                    // location.reload();
-                }
-                else if (xhr.readyState == 4 && xhr.status != 200) {
-                    // Error. Inform the user
-                    alert('Error');
-                }
-            })
-
-            formData.append('file', file);
-            formData.append("upload_preset", "dimage");
-            formData.append("tags", "fphoto");
-            xhr.send(formData)
-        }
-
-
-    function previewFile(file) {
-        let reader = new FileReader()
-        reader.readAsDataURL(file)
-        reader.onloadend = function () {
-            let img = document.createElement('img')
-            img.src = reader.result
-            document.getElementById('gallery').appendChild(img)
-        }
-    }
-
-    function initializeProgress(numfiles) {
-            progressBar.value = 0
-            filesDone = 0
-            filesToDo = numfiles
-        }
-
-        function progressDone() {
-            filesDone++
-            progressBar.value = filesDone / filesToDo * 100
-        }
-
-    fetchImage();
-        function fetchImage(){
-            let url = "https://res.cloudinary.com/dgjvys7hh/image/list/fphoto.json";
-
-            fetch(url)           //api for the get request
-                .then(response => response.json())
-                .then(data => 
-                    {
-                        // console.log(data.resources)
-                        let images = data.resources;
-                        let rootPath = "https://res.cloudinary.com/dgjvys7hh/image/upload/";
-                        var elm = document.querySelector("#main");
-
-                        let item = "<div class='image-container'>";
-                            images.forEach(function(i){
-                                
-                                item += '<img class="single-image" src="'+rootPath+i.public_id+'.'+i.format+'"/></div>'
-
-                                document.getElementById("main").innerHTML = (item)
-                            })
-
-                            
-                                
-
-                    }
-                );
-        }
-
+        
         
     </script>
+    <script src="assets/js/app.js"></script>
 </body>
 </html>
