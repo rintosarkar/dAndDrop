@@ -1,9 +1,9 @@
 #drop-area {
   border: 2px dashed #ccc;
   border-radius: 20px;
-  width: 400px;
+  /* width: 350px; */
   font-family: sans-serif;
-  margin: 100px auto;
+  /* margin: 100px auto; */
   padding: 20px;
 }
 #drop-area.highlight {
@@ -43,7 +43,7 @@ p {
     width: 100px;
     height: 100px;
     object-fit: cover;
-    margin-right: 5px;
+    padding: 5px;
 }
 
 .main-gallery{

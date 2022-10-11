@@ -105,18 +105,24 @@ let progressBar = document.getElementById('progress-bar')
                 {
                     // console.log(data.resources)
                     let images = data.resources;
-                    let rootPath = "https://res.cloudinary.com/dgjvys7hh/image/upload/";
+                    let rootPath = "https://res.cloudinary.com/dgjvys7hh/image/upload/w_300,h_100,c_fit/";
+                    let rootPath2 = "https://res.cloudinary.com/dgjvys7hh/image/upload/";
                     var elm = document.querySelector("#main");
 
-                    let item = "<div class='image-container'>";
-                        images.forEach(function(i){
-                            
-                            item += '<img class="single-image" src="'+rootPath+i.public_id+'.'+i.format+'"/></div>'
+                    let item = "<div class='image-container '>";
+                        images.forEach(function(i,j){
+                            console.log(j);
+                            let imgPath = rootPath+i.public_id+'.'+i.format;
+                            let fullImg = rootPath2+i.public_id+'.'+i.format;
+                            let imgName = (fullImg.slice('8'));
+                            console.log(imgName)
+                            item += '<img id="'+j+'" @click="showImg('+j+')" class="single-image cursor-pointer" src="'+imgPath+'"/></div><input type="hidden" id="img_'+j+'" value="'+fullImg+'"/>'
 
                             document.getElementById("main").innerHTML = (item)
                         })
 
                         document.getElementById('gallery').innerHTML=("");
+                        // document.getElementById('img').innerHTML=(item);
                 }
             );
     }

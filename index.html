@@ -7,16 +7,89 @@
     <title>Uddin Md Faizan</title>
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <style>
+        [x-cloak] {
+			display: none;
+		}
+
+		.duration-300 {
+			transition-duration: 300ms;
+		}
+
+		.ease-in {
+			transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+		}
+
+		.ease-out {
+			transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+		}
+
+		.scale-90 {
+			transform: scale(.9);
+		}
+
+		.scale-100 {
+			transform: scale(1);
+		}
+    </style>
 </head>
-<body>
-    <div class="top-section text-white text-2xl bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-center py-5">
+<body x-data="modalImage"
+        @keydown.escape="showModal = false" x-cloak>
+    <div class="top-section text-white sm: text-xl md:text-2xl bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-center py-5">
         <h1>Uddin Md Faizan's Gallery</h1>
     </div>
-    <div id="drop-area">
-        <p class="main-title">Uddin Md Faizan's Gallery</p>
+    <!-- ------- -->
+    <div class="mx-auto w-full bg-gray-100 flex items-center justify-center h-screen" >
+    
+        <section class="flex flex-wrap p-4 h-full items-center">
+    
+            <div class="main-gallery" id="main">
+            
+            </div>
+            <!--Overlay-->
+            <div class="overflow-auto" style="background-color: rgba(0,0,0,0.8)" x-show="showModal"
+                :class="{ 'absolute inset-0 z-10 flex items-center justify-center': showModal }">
+                <!--Dialog-->
+                <div class="bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg py-4 text-left px-6" x-show="showModal"
+                    @click.away="showModal = false" x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-300" x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-90">
+    
+                    <!--Title-->
+                    <div class="flex justify-between items-center pb-3">
+                        <img src="" alt="" id="dispImg">
+                    </div>
+    
+                    <!-- content -->
+                    <div id="img" class="flex justify-between items-center pb-3 flex-wrap">
+
+                    </div>
+    
+                    <!--Footer-->
+                    <div class="flex justify-end pt-2">
+                        <button
+                            class="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2"
+                            @click="alert('Additional Action');">Action</button>
+                        <button class="modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400"
+                            @click="showModal = false">Close</button>
+                    </div>
+    
+    
+                </div>
+                <!--/Dialog -->
+            </div><!-- /Overlay -->
+    
+        </section>
+    
+    </div>
+    <!-- --------- -->
+    <div id="drop-area" class="container mx-auto mt-2 mb-2">
+        <!-- <p class="main-title">Uddin Md Faizan's Gallery</p> -->
         <form class="my-form">
             <p class="sub-title">
-                Upload Images dragging and dropping <br/> images onto the dashed region</p>
+                Upload Images<br /> dragging and dropping <br/> images onto the dashed region</p>
             <input type="file" id="fileElem" accept="image/*" onchange="handleFiles(this.files)">
             <label class="button" for="fileElem">
                 Select some files
@@ -27,14 +100,37 @@
 
     </div>
 
-    <div class="main-gallery" id="main">
-
-    </div>
+    
 
     <script>
         
         
     </script>
     <script src="assets/js/app.js"></script>
+    <script>
+        const modalImage = {
+                showModal: false,
+                imgModalSrc: '',
+                imgModalDesc: '',
+                // likes: '',
+                allImages: [],
+                showImg(ai) {
+                    console.log(ai)
+                    this.showModal = true;
+                    let imgsrc = document.getElementById("img_"+ai).value;
+                    console.log(imgsrc)
+                    document.getElementById('dispImg').src = imgsrc; 
+
+                },
+                convertLikes(likes) {
+                    if (likes < 1000) {
+                        return likes;
+                    } else {
+                        return (likes / 1000).toFixed(2) + 'K'
+                    }
+
+                }
+            }
+    </script>
 </body>
 </html>
